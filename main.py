@@ -1,6 +1,6 @@
 ﻿#!/usr/bin/python -u
 import sys, os
-sys.path.insert(0, 'C:\\Project\\Python\\PyQT\\GraphTest\\ui')
+sys.path.insert(0, os.getcwd() +'\\ui')
 
 from PyQt5 import QtWidgets
 
