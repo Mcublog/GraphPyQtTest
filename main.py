@@ -6,7 +6,7 @@ from PyQt5 import QtWidgets
 
 import graph_test
 
-from xml_graph import set_graph # import MainWindow
+from xml_graph import show_graph # import MainWindow
 
 
 class ExampleApp(QtWidgets.QMainWindow, graph_test.Ui_MainWindow):
@@ -35,7 +35,7 @@ class ExampleApp(QtWidgets.QMainWindow, graph_test.Ui_MainWindow):
         dir_list = os.listdir(data_path)
         path = data_path + '\\' + dir_list[0] + '\\' + item.text()
         print(path)
-        set_graph(path)
+        show_graph(path)
 
 
 def main():
