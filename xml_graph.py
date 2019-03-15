@@ -100,15 +100,15 @@ def show_acc_graph(path):
     plt.xlabel("Time", fontsize = 8)
     plt.ylabel("g", fontsize = 12)
 
-    # Create x_tick, grid and legend
-    plt.grid(linestyle = 'dashed')
-    legend = ax.legend(loc='best')    
-
     # Generate a list from 0 to report number
     x = [++i for i in range(len(reports))]
     ax.plot(x, accx, 'r-', label='x')
     ax.plot(x, accy, 'y-', label='y')
     ax.plot(x, accz, 'g-', label='z')
+    
+    # Create x_tick, grid and legend
+    plt.grid(linestyle = 'dashed')
+    ax.legend(loc='best')    
 
     # Set the origin
     ax.axhline(y = 0, color = 'k')

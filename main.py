@@ -24,6 +24,7 @@ class ExampleApp(QtWidgets.QMainWindow, graph_test.Ui_MainWindow):
         self.lwFiles.clear()
     
     def directory_find(self):
+        self.clear_list()
         directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Choose directory with logs (*xml)")
         if directory:  # if not directory break
             self.__current_dir = directory
