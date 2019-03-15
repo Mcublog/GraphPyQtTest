@@ -18,6 +18,7 @@ class ExampleApp(QtWidgets.QMainWindow, graph_test.Ui_MainWindow):
         self.pbClear.clicked.connect(self.clear_list)
         self.pbChooseDir.clicked.connect(self.directory_find)
         self.lwFiles.itemDoubleClicked.connect(self.press)
+        self.__current_dir = ''
 
     def clear_list(self):
         self.lwFiles.clear()
@@ -25,15 +26,13 @@ class ExampleApp(QtWidgets.QMainWindow, graph_test.Ui_MainWindow):
     def directory_find(self):
         directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Choose directory with logs (*xml)")
         if directory:  # if not directory break
+            self.__current_dir = directory
+            print("__current_dir: " + self.__current_dir)
             for file_name in os.listdir(directory):  # for each file in dir
                 self.lwFiles.addItem(file_name)      # added to lwFiles
     
     def press(self, item):
-        print('press item: ' + item.text())
-        current_path = os.path.dirname(os.path.realpath(__file__))
-        data_path = current_path + '\\data'
-        dir_list = os.listdir(data_path)
-        path = data_path + '\\' + dir_list[0] + '\\' + item.text()
+        path = self.__current_dir + '/' + item.text()
         print(path)
         show_graph(path)
 

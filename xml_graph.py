@@ -7,11 +7,15 @@ def get_datetime_from_report(report, datetime):
     timestamp = report.find('timestamp')
     return(timestamp.find(datetime).text)
     
-def get_temp_from_report(report, dev):
-    hdc = report.find(dev)
-    temp = hdc.find('t').text
-    temp = temp.replace(',', '.')
-    return (float(temp))    
+def get_float_from_dev_report(report, device, param):
+    dev = report.find(device)
+    return get_float_from_report(dev, param)
+
+def get_float_from_report(report, param):
+    temp = report.find(param).text
+    if ',' in temp:
+        temp = temp.replace(',', '.')
+    return (float(temp))
 
 def get_list_files(file_name):
     # Set path to data file
@@ -26,26 +30,26 @@ def get_list_files(file_name):
         if (file_name in file):
             print ('file: ' + file)
             idx = i
-            break;
+            break
     print(idx)
     del file_list[0:idx]
     return file_list
     
 def show_temp_graph(path):
     tree = ET.parse(path)
-    root = tree.getroot()
+    reports = tree.getroot()
 
     x_tick = [] # x ticks like 10:42:30:513, 10:42:31:513 and etc
     hdc_temp = [] # temperature from hdc1080  
     lps_temp = [] # temperature from lps331
 
-    for report in root:
+    for report in reports:
         # Get node timestamp for x_ticks
         x_tick.append(get_datetime_from_report(report, 'time')[:-4])
         # Get temp from hdc1080 node
-        hdc_temp.append(get_temp_from_report(report, 'hdc1080'))
+        hdc_temp.append(get_float_from_dev_report(report, 'hdc1080', 't'))
         # Get temp from lps331 node
-        lps_temp.append(get_temp_from_report(report, 'lps331'))
+        lps_temp.append(get_float_from_dev_report(report, 'lps331', 't'))
 
     # Create plots
     fig, ax = plt.subplots()
@@ -53,7 +57,7 @@ def show_temp_graph(path):
     plt.xlabel("Time", fontsize = 8)
     plt.ylabel("Temperature", fontsize = 12)
     # Generate a list from 0 to report number
-    x = [++i for i in range(len(root))]
+    x = [++i for i in range(len(reports))]
     ax.plot(x, hdc_temp, 'r-', label='hdc_temp')
     ax.plot(x, lps_temp, 'y-', label='lps331')
 
@@ -72,29 +76,49 @@ def show_temp_graph(path):
     mng.window.state('zoomed')
 
     plt.show()
-    
+
+
 def show_acc_graph(path):
     tree = ET.parse(path)
     root = tree.getroot()
 
     # x_tick = [] # x ticks like 10:42:30:513, 10:42:31:513 and etc
-    x = [] # acc for axis
-    y = [] # acc for axis
-    z = [] # acc for axis
+    accx = [] # acc for axis
+    accy = [] # acc for axis
+    accz = [] # acc for axis
     
-    print(root)
     # get node data
     reports = root.find('report')
-    print(reports)
     for report in reports:
-        print(report)
-    #    # Get node timestamp for x_ticks
-    #    x_tick.append(get_datetime_from_report(report, 'time')[:-4])
-    #    # Get temp from hdc1080 node
-    #    x.append(get_temp_from_report(report, 'hdc1080'))
-    #    # Get temp from lps331 node
-    #    lps_temp.append(get_temp_from_report(report, 'lps331'))    
- 
+        accx.append(get_float_from_report(report, 'x'))
+        accy.append(get_float_from_report(report, 'y'))
+        accz.append(get_float_from_report(report, 'z'))
+    
+    # Create plots
+    fig, ax = plt.subplots()
+    plt.title("ACC graphic", fontsize = 14)
+    plt.xlabel("Time", fontsize = 8)
+    plt.ylabel("g", fontsize = 12)
+
+    # Create x_tick, grid and legend
+    plt.grid(linestyle = 'dashed')
+    legend = ax.legend(loc='best')    
+
+    # Generate a list from 0 to report number
+    x = [++i for i in range(len(reports))]
+    ax.plot(x, accx, 'r-', label='x')
+    ax.plot(x, accy, 'y-', label='y')
+    ax.plot(x, accz, 'g-', label='z')
+
+    # Set the origin
+    ax.axhline(y = 0, color = 'k')
+    ax.axvline(x = 0, color = 'k')
+
+    # Set fig to fullscreen
+    mng = plt.get_current_fig_manager()
+    mng.window.state('zoomed')
+
+    plt.show()    
     
 def show_graph(path):
     if not os.path.isfile(path):
