@@ -40,16 +40,20 @@ def show_temp_graph(path):
     reports = tree.getroot()
 
     x_tick = [] # x ticks like 10:42:30:513, 10:42:31:513 and etc
-    hdc_temp = [] # temperature from hdc1080  
+    hdc_temp = [] # temperature from hdc1080
+    hdc_hum = [] # hummidity from hdc1080
     lps_temp = [] # temperature from lps331
+    lps_p = [] # pressure from lps331
 
     for report in reports:
         # Get node timestamp for x_ticks
         x_tick.append(get_datetime_from_report(report, 'time')[:-4])
-        # Get temp from hdc1080 node
+        # Get data from hdc1080 node
         hdc_temp.append(get_float_from_dev_report(report, 'hdc1080', 't'))
-        # Get temp from lps331 node
+        hdc_hum.append(get_float_from_dev_report(report, 'hdc1080', 'hum'))        
+        # Get data from lps331 node
         lps_temp.append(get_float_from_dev_report(report, 'lps331', 't'))
+        lps_p.append(get_float_from_dev_report(report, 'lps331', 'p'))
 
     # Create plots
     fig, ax = plt.subplots()
@@ -60,6 +64,7 @@ def show_temp_graph(path):
     x = [++i for i in range(len(reports))]
     ax.plot(x, hdc_temp, 'r-', label='hdc_temp')
     ax.plot(x, lps_temp, 'y-', label='lps331')
+    ax.plot(x, hdc_hum, 'b-', label='hum')
 
     # Create x_tick, grid and legend
     plt.xticks(x, x_tick, rotation = 90)

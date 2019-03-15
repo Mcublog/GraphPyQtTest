@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Project\Python\PyQT\GraphTest\ui\graph_test.ui'
+# Form implementation generated from reading ui file 'C:\Project\Python\PyQT\GraphPyQtTest\ui\graph_test.ui'
 #
 # Created by: PyQt5 UI code generator 5.12
 #
