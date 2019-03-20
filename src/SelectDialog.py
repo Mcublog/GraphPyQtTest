@@ -1,5 +1,6 @@
 ﻿import sys, os
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
 
 sys.path.insert(0, os.getcwd() +'\\ui\\select_dialog')
 
@@ -14,6 +15,7 @@ class SelectDialogWindow(QtWidgets.QDialog, select_dialog.Ui_SelectDialog):
         self.rbTemperature.clicked.connect(lambda: self.select('Temperature'))
         self.rbHumidity.clicked.connect(lambda: self.select('Humidity'))
         self.rbPressure.clicked.connect(lambda: self.select('Pressure'))
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
         self.show()
         self.__state = 'Temperature'
     
