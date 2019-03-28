@@ -17,7 +17,7 @@ class SelectDialogWindow(QtWidgets.QDialog, select_dialog.Ui_SelectDialog):
         self.rbPressure.clicked.connect(lambda: self.select('Pressure'))
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
         self.show()
-        self.__state = 'Temperature'
+        self.__state = ''
     
     def select(self, name):
         self.__state = name

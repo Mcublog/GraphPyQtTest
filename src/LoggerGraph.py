@@ -39,7 +39,8 @@ class LoggerGraphWindow(QtWidgets.QMainWindow, graph_test.Ui_MainWindow):
             return
         if 'tph_report' in item.text():
             type = SelectDialogWindow.get_graph_type(self)
-            show_tph_graph(path, type)
-            print(type)
+            if type:
+                show_tph_graph(path, type)
+                print(type)
         else:
             show_acc_graph(path)
