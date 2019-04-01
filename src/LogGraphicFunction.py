@@ -42,6 +42,8 @@ def get_list_files(file_name):
 def show_tph_graph(path, type = 'Temperature'):
     tree = ET.parse(path)
     reports = tree.getroot()
+    if reports.tag != 'tph_report':
+        return
 
     x_tick = [] # x ticks like 10:42:30:513, 10:42:31:513 and etc
     hdc_temp = [] # temperature from hdc1080
@@ -96,6 +98,8 @@ def show_tph_graph(path, type = 'Temperature'):
 def show_acc_graph(path):
     tree = ET.parse(path)
     root = tree.getroot()
+    if root.tag != 'acc_report':
+        return
 
     # x_tick = [] # x ticks like 10:42:30:513, 10:42:31:513 and etc
     accx = [] # acc for axis
@@ -137,6 +141,8 @@ def show_acc_graph(path):
 def show_jrnl_graph(path, type = 'Voltage'):
     tree = ET.parse(path)
     journal = tree.getroot()
+    if journal.tag != 'jornal':
+        return
 
     accx = [] # acc for axis
     accy = [] # acc for axis
