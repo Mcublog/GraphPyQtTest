@@ -5,8 +5,9 @@ sys.path.insert(0, os.getcwd() +'\\ui')
 
 # Main Window ui
 import graph_test
-from SelectDialog import SelectDialogWindow
-from LogGraphicFunction import (show_acc_graph, show_tph_graph)
+from SelectDialog       import SelectDialogWindow
+from SelectJornal       import SelectJornalDialogWindow
+from LogGraphicFunction import (show_acc_graph, show_tph_graph, show_jrnl_graph)
 
 
 class LoggerGraphWindow(QtWidgets.QMainWindow, graph_test.Ui_MainWindow):
@@ -37,10 +38,14 @@ class LoggerGraphWindow(QtWidgets.QMainWindow, graph_test.Ui_MainWindow):
         print(path)
         if not os.path.isfile(path):
             return
+            
         if 'tph_report' in item.text():
             type = SelectDialogWindow.get_graph_type(self)
             if type:
                 show_tph_graph(path, type)
-                print(type)
-        else:
+        elif 'acc_report' in item.text():
             show_acc_graph(path)
+        elif 'jornal' in item.text():
+            type = SelectJornalDialogWindow.get_graph_type(self)
+            if type:
+                show_jrnl_graph(path, type)
