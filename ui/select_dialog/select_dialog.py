@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Project\Python\PyQT\GraphPyQtTest\ui\select_dialog\select_graph.ui'
+# Form implementation generated from reading ui file 'D:\Projects\Python\GraphPyQtTest\ui\select_dialog\select_graph.ui'
 #
-# Created by: PyQt5 UI code generator 5.12
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,9 +12,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_SelectDialog(object):
     def setupUi(self, SelectDialog):
         SelectDialog.setObjectName("SelectDialog")
-        SelectDialog.resize(110, 105)
+        SelectDialog.resize(156, 152)
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(SelectDialog)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.groupBox = QtWidgets.QGroupBox(SelectDialog)
-        self.groupBox.setGeometry(QtCore.QRect(0, 0, 107, 98))
         self.groupBox.setObjectName("groupBox")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.groupBox)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -30,6 +31,7 @@ class Ui_SelectDialog(object):
         self.rbHumidity.setObjectName("rbHumidity")
         self.verticalLayout.addWidget(self.rbHumidity)
         self.verticalLayout_2.addLayout(self.verticalLayout)
+        self.verticalLayout_3.addWidget(self.groupBox)
 
         self.retranslateUi(SelectDialog)
         QtCore.QMetaObject.connectSlotsByName(SelectDialog)
