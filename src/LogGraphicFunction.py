@@ -6,7 +6,7 @@ import math, os, numpy
 def get_datetime_from_report(report, datetime):
     timestamp = report.find('timestamp')
     return(timestamp.find(datetime).text)
-    
+
 def get_float_from_dev_report(report, device, param):
     dev = report.find(device)
     return get_float_from_report(dev, param)
@@ -18,8 +18,23 @@ def get_float_from_report(report, param):
     return (float(temp))
     
 def set_plt_title_and_ylabel(plt, title, label):
-        plt.title(title, fontsize = 14)
-        plt.ylabel(label, fontsize = 12)  
+    plt.title(title, fontsize = 14)
+    plt.ylabel(label, fontsize = 12)
+
+def get_acc_setting(report, param):
+    header = report.find('header')
+    settings = header.find('settings')
+    try:
+        return settings.find(param)
+    except:
+        return    
+
+def get_acc_time(report):
+    header = report.find('header')
+    try:
+        return header.find('time').text
+    except:
+        return
 
 def get_list_files(file_name):
     # Set path to data file
@@ -101,14 +116,16 @@ def show_acc_graph(path):
     if root.tag != 'acc_report':
         return
 
-    # x_tick = [] # x ticks like 10:42:30:513, 10:42:31:513 and etc
+    x_tick = [] # x ticks like 10:42:30:513, 0.25 us, 0.5 us and etc depends of freq
     accx = [] # acc for axis
     accy = [] # acc for axis
     accz = [] # acc for axis
     
     # get node data
+    freq = float(get_acc_setting(root, 'freq').text)
     reports = root.find('report')
-    for report in reports:
+    for i, report in enumerate(reports):
+        x_tick.append(i / freq * 1000)
         accx.append(get_float_from_report(report, 'x'))
         accy.append(get_float_from_report(report, 'y'))
         accz.append(get_float_from_report(report, 'z'))
@@ -125,6 +142,8 @@ def show_acc_graph(path):
     ax.plot(x, accz, 'g-', label='z')
     
     # Create x_tick, grid and legend
+    x_tick[0] = get_acc_time(root)
+    plt.xticks(x, x_tick, rotation = 90)    
     plt.grid(linestyle = 'dashed')
     ax.legend(loc='best')    
 
