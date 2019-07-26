@@ -1,13 +1,13 @@
 import sys, os
 from PyQt5 import QtWidgets
 sys.path.insert(0, os.getcwd() +'\\ui')
-
+sys.path.insert(0, os.getcwd() +'\\src\\graph')
 
 # Main Window ui
-import graph_test
 from SelectDialog       import SelectDialogWindow
 from SelectJornal       import SelectJornalDialogWindow
-from LogGraphicFunction import (show_acc_graph, show_tph_graph, show_jrnl_graph)
+import graph_test
+from LoggerXmlGraphViewer import (show_acc_graph, show_tph_graph, show_jrnl_graph)
 
 
 class LoggerGraphWindow(QtWidgets.QMainWindow, graph_test.Ui_MainWindow):
